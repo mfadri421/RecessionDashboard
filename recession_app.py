@@ -124,9 +124,17 @@ plt.switch_backend('Agg')
 # Set the sequence length
 SEQ_LEN = 6
 
-# Load the dataset
-# Assuming the dataset is now accessible at this path
-df = load_data("final_recession_dataset_1975_2025.csv")
+# ...existing imports...
+
+# Streamlit file uploader for new data
+uploaded_file = st.file_uploader("Upload new recession data CSV", type=["csv"])
+
+if uploaded_file is not None:
+    df = load_data(uploaded_file)
+    st.success("New data loaded!")
+else:
+    df = load_data("final_recession_dataset_1975_2025.csv")
+# ...rest of your code...
 
 # Preprocess data and train the model
 X_seq, y_seq, scaler, dates_seq = preprocess_data(df, seq_len=SEQ_LEN)
